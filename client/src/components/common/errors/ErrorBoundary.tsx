@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { MainTemplate } from "../../templates/MainTemplate";
+import { MainTemplate } from "../../../templates/MainTemplate";
 
 export const ErrorBoundary = () => {
   return (

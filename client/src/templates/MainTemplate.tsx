@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import { ReactNode } from "react";
-import { Header } from "../components/common/Header";
-import { Navbar } from "../components/common/Navbar";
+import { Header } from "../components/common/templates/main/Header";
+import { Navbar } from "../components/common/templates/main/Navbar";
 
 export const MainTemplate = ({ children }: { children: ReactNode }) => {
   return (

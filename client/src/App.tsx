@@ -5,13 +5,16 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import { ErrorBoundary } from "./components/common/ErrorBoundary";
+import { ErrorBoundary } from "./components/common/errors/ErrorBoundary";
 import { theme } from "./styles/theme";
 import { NotFound } from "./pages/NotFound";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PizzasView } from "./pages/PizzasView";
-import { IngredientsView } from "./pages/IngredientsView";
-import { OperationsView } from "./pages/OperationsView";
+import { PizzasListView } from "./pages/PizzasListView";
+import { IngredientsListView } from "./pages/IngredientsListView";
+import { OperationsListView } from "./pages/OperationsListView";
+import { PizzaView } from "./pages/PizzaView";
+import { IngredientView } from "./pages/IngredientView";
+import { OperationView } from "./pages/OperationView";
 
 export const queryClient = new QueryClient();
 
@@ -23,17 +26,32 @@ function App() {
     },
     {
       path: "/pizzas",
-      element: <PizzasView />,
+      element: <PizzasListView />,
+      errorElement: <ErrorBoundary />,
+    },
+    {
+      path: "/pizza/:pizzaId",
+      element: <PizzaView />,
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/ingredients",
-      element: <IngredientsView />,
+      element: <IngredientsListView />,
+      errorElement: <ErrorBoundary />,
+    },
+    {
+      path: "/ingredient/:ingredientId",
+      element: <IngredientView />,
       errorElement: <ErrorBoundary />,
     },
     {
       path: "/operations",
-      element: <OperationsView />,
+      element: <OperationsListView />,
+      errorElement: <ErrorBoundary />,
+    },
+    {
+      path: "/operation/:operationId",
+      element: <OperationView />,
       errorElement: <ErrorBoundary />,
     },
     { path: "*", element: <NotFound />, errorElement: <ErrorBoundary /> },
