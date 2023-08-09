@@ -15,6 +15,7 @@ import { EditPizzaDto } from './dtos/edit-pizza.dto';
 @Controller('pizzas')
 export class PizzasController {
   constructor(private pizzasService: PizzasService) {}
+
   @Get()
   getPizzas() {
     return this.pizzasService.getAll();
@@ -22,22 +23,22 @@ export class PizzasController {
 
   @Get('/:id')
   getPizza(@Param('id') id: string) {
-    return this.pizzasService.getById(+id);
+    return this.pizzasService.getById(id);
   }
 
   @Post()
   addPizza(@Body() body: CreatePizzaDto) {
-    return this.pizzasService.add(body.name, body.price);
+    return this.pizzasService.add(body);
   }
 
   @Delete('/:id')
   @HttpCode(204)
   removePizza(@Param('id') id: string) {
-    return this.pizzasService.remove(+id);
+    return this.pizzasService.remove(id);
   }
 
   @Patch('/:id')
   editPizza(@Body() body: EditPizzaDto, @Param('id') id: string) {
-    return this.pizzasService.edit(+id, body.price);
+    return this.pizzasService.edit(id, body.price);
   }
 }

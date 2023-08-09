@@ -1,34 +1,47 @@
-import { Injectable } from '@nestjs/common';
-
-let operations = [
-  { id: 1, name: 'krojenie' },
-  { id: 2, name: 'smażenie' },
-  { id: 3, name: 'pieczenie' },
-];
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { CreateOperationDto } from './dtos/create-operation.dto';
+import { Operation } from './schema/operation.schema';
 
 @Injectable()
 export class OperationsService {
-  getAll(): any[] {
-    return operations;
+  constructor(
+    @InjectModel('Operation') private operationModel: mongoose.Model<Operation>,
+  ) {}
+
+  async getAll(): Promise<Operation[]> {
+    return await this.operationModel.find();
   }
-  getById(id: number): any {
-    return operations.find((operation) => operation.id === id);
+  async getById(id: string): Promise<Operation> {
+    const pizza = await this.operationModel.findById(id);
+
+    if (!pizza) throw new NotFoundException('Pizza not found');
+
+    return pizza;
   }
 
-  add(name: string): any {
-    const id = Math.floor(Math.random() * 100);
-    const newOperation = { id, name };
-    operations.push(newOperation);
-    return operations;
+  async add(createOperationDto: CreateOperationDto): Promise<Operation> {
+    try {
+      const newOperation = await this.operationModel.create(createOperationDto);
+      return newOperation.save();
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
-  remove(id: number): any {
-    operations = operations.filter((operation) => operation.id !== id);
+  async remove(id: string): Promise<Operation> {
+    return await this.operationModel.findByIdAndRemove(id);
   }
 
-  edit(id: number, name: string): any {
-    const operation = operations.find((operation) => operation.id === id);
-    operation.name = name;
-    return operation;
+  async edit(id: string, name: string): Promise<Operation> {
+    return await this.operationModel.findByIdAndUpdate(
+      id,
+      { name },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
   }
 }

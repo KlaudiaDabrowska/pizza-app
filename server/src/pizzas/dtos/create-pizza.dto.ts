@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsPositive,
@@ -6,6 +7,7 @@ import {
   Length,
   Min,
 } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreatePizzaDto {
   @IsString()
@@ -20,4 +22,7 @@ export class CreatePizzaDto {
   @IsPositive()
   @Min(5)
   price: number;
+
+  @IsArray()
+  ingredients: ObjectId[];
 }

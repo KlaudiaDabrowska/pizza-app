@@ -1,11 +1,4 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { CreateOperationDto } from './create-operation.dto';
+import { PartialType } from '@nestjs/mapped-types';
 
-export class EditOperationDto {
-  @IsString()
-  @IsNotEmpty()
-  @Length(3, 20, {
-    message:
-      'Operation name must be at least 3 characters, and max length must be less than 20 characters',
-  })
-  name: string;
-}
+export class EditOperationDto extends PartialType(CreateOperationDto) {}

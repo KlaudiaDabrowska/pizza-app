@@ -1,8 +1,4 @@
-import { IsNumber, IsPositive, Min } from 'class-validator';
+import { CreatePizzaDto } from './create-pizza.dto';
+import { PartialType } from '@nestjs/mapped-types';
 
-export class EditPizzaDto {
-  @IsNumber()
-  @IsPositive()
-  @Min(5)
-  price: number;
-}
+export class EditPizzaDto extends PartialType(CreatePizzaDto) {}

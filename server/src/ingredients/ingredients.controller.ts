@@ -22,22 +22,22 @@ export class IngredientsController {
 
   @Get('/:id')
   getIngredient(@Param('id') id: string) {
-    return this.ingredientsService.getById(+id);
+    return this.ingredientsService.getById(id);
   }
 
   @Post()
   addIngredient(@Body() body: CreateIngredientDto) {
-    return this.ingredientsService.add(body.name);
+    return this.ingredientsService.add(body);
   }
 
   @Delete('/:id')
   @HttpCode(204)
   removeIngredient(@Param('id') id: string) {
-    return this.ingredientsService.remove(+id);
+    return this.ingredientsService.remove(id);
   }
 
   @Patch('/:id')
   editIngredient(@Body() body: EditIngredientDto, @Param('id') id: string) {
-    return this.ingredientsService.edit(+id, body.name);
+    return this.ingredientsService.edit(id, body.name);
   }
 }

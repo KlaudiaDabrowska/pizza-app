@@ -1,34 +1,51 @@
-import { Injectable } from '@nestjs/common';
-
-let ingredients = [
-  { id: 1, name: 'pepper' },
-  { id: 2, name: 'pepperoni' },
-  { id: 3, name: 'flour' },
-];
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { CreateIngredientDto } from './dtos/create-ingredient.dto';
+import { Ingredient } from './schema/ingredient.schema';
 
 @Injectable()
 export class IngredientsService {
-  getAll(): any[] {
-    return ingredients;
-  }
-  getById(id: number): any {
-    return ingredients.find((ingredient) => ingredient.id === id);
+  constructor(
+    @InjectModel('Ingredient')
+    private ingredientModel: mongoose.Model<Ingredient>,
+  ) {}
+
+  async getAll(): Promise<Ingredient[]> {
+    return await this.ingredientModel.find().populate('pizzas');
   }
 
-  add(name: string): any {
-    const id = Math.floor(Math.random() * 100);
-    const newIngredient = { id, name };
-    ingredients.push(newIngredient);
-    return ingredients;
-  }
+  async getById(id: string): Promise<Ingredient> {
+    const ingredient = await this.ingredientModel.findById(id);
 
-  remove(id: number): any {
-    ingredients = ingredients.filter((ingredient) => ingredient.id !== id);
-  }
+    if (!ingredient) throw new NotFoundException('Ingredient not found');
 
-  edit(id: number, name: string): any {
-    const ingredient = ingredients.find((ingredient) => ingredient.id === id);
-    ingredient.name = name;
     return ingredient;
+  }
+
+  async add(createIngredientDto: CreateIngredientDto): Promise<Ingredient> {
+    try {
+      const newIngredient = await this.ingredientModel.create(
+        createIngredientDto,
+      );
+      return newIngredient.save();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async remove(id: string): Promise<Ingredient> {
+    return await this.ingredientModel.findByIdAndRemove(id);
+  }
+
+  async edit(id: string, name: string): Promise<Ingredient> {
+    return await this.ingredientModel.findByIdAndUpdate(
+      id,
+      { name },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
   }
 }

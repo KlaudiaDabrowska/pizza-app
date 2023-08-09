@@ -22,22 +22,22 @@ export class OperationsController {
 
   @Get('/:id')
   getOperation(@Param('id') id: string) {
-    return this.operationsService.getById(+id);
+    return this.operationsService.getById(id);
   }
 
   @Post()
   addOperation(@Body() body: CreateOperationDto) {
-    return this.operationsService.add(body.name);
+    return this.operationsService.add(body);
   }
 
   @Delete('/:id')
   @HttpCode(204)
   removeOperation(@Param('id') id: string) {
-    return this.operationsService.remove(+id);
+    return this.operationsService.remove(id);
   }
 
   @Patch('/:id')
   editOperation(@Body() body: EditOperationDto, @Param('id') id: string) {
-    return this.operationsService.edit(+id, body.name);
+    return this.operationsService.edit(id, body.name);
   }
 }
