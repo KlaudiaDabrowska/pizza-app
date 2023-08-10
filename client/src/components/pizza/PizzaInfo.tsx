@@ -1,33 +1,25 @@
-import {
-  Container,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
+import { IPizzaWithRelated } from "../../types/IPizza";
 
-export const PizzaInfo = ({ pizza }: { pizza?: any }) => {
-  const theme = useTheme();
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+export const PizzaInfo = ({ pizza }: { pizza?: IPizzaWithRelated }) => {
   return (
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h5" data-testid="streamerName">
-            pizza
-          </Typography>
-          <Typography variant="subtitle2" data-testid="platform">
-            pizza
+          <Typography variant="h5">{pizza?.name}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="subtitle2">
+            Ingredients:{" "}
+            {pizza?.ingredients
+              .map((ingredient) => ingredient?.name)
+              .join(", ")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          pizza
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5" data-testid="description">
-            pizza
+          <Typography variant="subtitle2">
+            Operations:{" "}
+            {pizza?.operations.map((operation) => operation?.name).join(", ")}
           </Typography>
         </Grid>
       </Grid>

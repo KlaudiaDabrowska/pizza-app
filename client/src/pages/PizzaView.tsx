@@ -1,30 +1,24 @@
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { MainTemplate } from "../templates/MainTemplate";
 import { PizzaInfo } from "../components/pizza/PizzaInfo";
 import { ViewElement } from "../components/common/ViewElement";
 import { BackButton } from "../components/common/buttons/BackButton";
+import { getPizzaById } from "../api/getPizzaById";
+import { useQuery } from "@tanstack/react-query";
 
 export const PizzaView = () => {
-  const theme = useTheme();
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   const params = useParams();
 
   const pizzaId = params.pizzaId;
 
-  const isLoading = false;
-  const isError = false;
-
-  //pobieranie jednej pizzki
-
-  const pizza = {
-    name: "Margarita",
-    price: 23,
-    ingredients: ["cheese", "tomato"],
-    operations: ["add", "remove"],
-  };
+  const {
+    data: pizza,
+    isLoading,
+    isError,
+  } = useQuery(["pizzaInfo"], () => getPizzaById(pizzaId!), {
+    enabled: pizzaId !== "undefined",
+  });
 
   return (
     <MainTemplate>

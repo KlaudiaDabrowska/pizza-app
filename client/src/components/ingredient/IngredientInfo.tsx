@@ -1,34 +1,25 @@
-import {
-  Container,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
+import { IIngredientWithRelated } from "../../types/IIngredient";
 
-export const IngredientInfo = ({ ingredient }: { ingredient?: any }) => {
-  const theme = useTheme();
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+export const IngredientInfo = ({
+  ingredient,
+}: {
+  ingredient?: IIngredientWithRelated;
+}) => {
   return (
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h5" data-testid="streamerName">
-            ingredient
-          </Typography>
-          <Typography variant="subtitle2" data-testid="platform">
-            ingredient
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          ingredient
+          <Typography variant="h5">{ingredient?.name}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5" data-testid="description">
-            ingredient
+          <Typography variant="subtitle2">
+            Operation: {ingredient?.operation?.name}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="subtitle2">
+            Pizzas: {ingredient?.pizzas.map((pizza) => pizza?.name).join(", ")}
           </Typography>
         </Grid>
       </Grid>

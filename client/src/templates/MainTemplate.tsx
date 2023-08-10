@@ -8,7 +8,7 @@ export const MainTemplate = ({ children }: { children: ReactNode }) => {
     <Container maxWidth="md">
       <Header />
       <Navbar />
-      <Grid container spacing={3} sx={{ mt: 2 }}>
+      <Grid container spacing={3} sx={{ mt: 2 }} justifyContent="center">
         {children}
       </Grid>
     </Container>

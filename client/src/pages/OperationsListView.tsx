@@ -1,15 +1,10 @@
-import { useMediaQuery, useTheme } from "@mui/material";
 import { MainTemplate } from "../templates/MainTemplate";
-import { OperationsList } from "../components/operation/OperationsList";
+import { List } from "../components/common/List";
 
 export const OperationsListView = () => {
-  const theme = useTheme();
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   return (
     <MainTemplate>
-      <OperationsList />
+      <List itemName="operation" />
     </MainTemplate>
   );
 };
