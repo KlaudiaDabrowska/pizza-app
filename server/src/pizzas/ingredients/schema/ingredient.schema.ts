@@ -1,14 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { Pizza } from 'src/pizzas/schema/pizza.schema';
+import { Operation } from 'src/pizzas/operations/schema/operation.schema';
 
 @Schema()
 export class Ingredient {
   @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop({ type: [{ type: mongoose.Types.ObjectId, ref: 'Pizza' }] })
-  pizzas: Pizza[];
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Operation' })
+  operation: Operation;
 }
 
 export const IngredientSchema = SchemaFactory.createForClass(Ingredient);

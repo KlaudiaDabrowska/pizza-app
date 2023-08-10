@@ -25,4 +25,7 @@ export class CreatePizzaDto {
 
   @IsArray()
   ingredients: ObjectId[];
+
+  @IsArray()
+  operations: ObjectId[];
 }

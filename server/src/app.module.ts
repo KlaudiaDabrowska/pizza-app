@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { PizzasModule } from './pizzas/pizzas.module';
-import { IngredientsModule } from './ingredients/ingredients.module';
-import { OperationsModule } from './operations/operations.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
@@ -11,8 +9,6 @@ dotenvConfig({ path: '.env' });
 @Module({
   imports: [
     PizzasModule,
-    IngredientsModule,
-    OperationsModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,

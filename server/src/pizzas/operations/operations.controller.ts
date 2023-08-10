@@ -30,14 +30,14 @@ export class OperationsController {
     return this.operationsService.add(body);
   }
 
+  @Patch('/:id')
+  editOperation(@Body() body: EditOperationDto, @Param('id') id: string) {
+    return this.operationsService.edit(id, body);
+  }
+
   @Delete('/:id')
   @HttpCode(204)
   removeOperation(@Param('id') id: string) {
     return this.operationsService.remove(id);
-  }
-
-  @Patch('/:id')
-  editOperation(@Body() body: EditOperationDto, @Param('id') id: string) {
-    return this.operationsService.edit(id, body.name);
   }
 }

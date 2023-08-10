@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsString, Length } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateIngredientDto {
   @IsString()
@@ -8,4 +9,7 @@ export class CreateIngredientDto {
       'Ingredient name must be at least 3 characters, and max length must be less than 20 characters',
   })
   name: string;
+
+  @IsMongoId()
+  operation: ObjectId;
 }

@@ -1,9 +1,26 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { CreatePizzaDto } from './dtos/create-pizza.dto';
 import { Pizza } from './schema/pizza.schema';
-import { Ingredient } from 'src/ingredients/schema/ingredient.schema';
+import { Ingredient } from 'src/pizzas/ingredients/schema/ingredient.schema';
+import { Operation } from './operations/schema/operation.schema';
+import { EditPizzaDto } from './dtos/edit-pizza.dto';
+
+export interface IPizza {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  price: number;
+}
+
+export interface IPizzaWithRelated extends IPizza {
+  ingredients: Ingredient[];
+  operations: Operation[];
+}
 
 @Injectable()
 export class PizzasService {
@@ -11,50 +28,73 @@ export class PizzasService {
     @InjectModel('Pizza') private pizzaModel: mongoose.Model<Pizza>,
     @InjectModel('Ingredient')
     private ingredientModel: mongoose.Model<Ingredient>,
+    @InjectModel('Operation') private operationModel: mongoose.Model<Operation>,
   ) {}
 
-  async getAll(): Promise<Pizza[]> {
-    return await this.pizzaModel.find();
+  async getAll(): Promise<IPizza[]> {
+    return await this.pizzaModel
+      .find()
+      .select('-ingredients')
+      .select('-operations');
   }
 
-  async getById(id: string): Promise<Pizza> {
-    const pizza = await this.pizzaModel.findById(id);
+  async getById(id: string): Promise<IPizzaWithRelated> {
+    const pizza = await this.pizzaModel
+      .findById(id)
+      .populate({ path: 'ingredients', select: '-operation' })
+      .populate({ path: 'operations' });
 
     if (!pizza) throw new NotFoundException('Pizza not found');
 
     return pizza;
   }
 
-  async add(createPizzaDto: CreatePizzaDto): Promise<Pizza> {
+  async add(createPizzaDto: CreatePizzaDto): Promise<IPizzaWithRelated> {
     try {
       const ingredients = await this.ingredientModel.find({
         _id: { $in: createPizzaDto.ingredients },
       });
-      console.log(createPizzaDto.ingredients);
+
+      const operations = await this.operationModel.find({
+        _id: { $in: createPizzaDto.operations },
+      });
 
       const newPizza = await this.pizzaModel.create({
-        name: createPizzaDto.name,
-        price: createPizzaDto.price,
-        ingredients: ingredients,
+        ...createPizzaDto,
+        ingredients,
+        operations,
       });
+
       return newPizza.save();
     } catch (err) {
-      throw new Error(err);
+      if (err.name === 'MongoServerError' && err?.code === 11000) {
+        throw new BadRequestException('Given pizza already exists');
+      }
+      throw err;
     }
   }
 
-  async remove(id: string): Promise<Pizza> {
-    return await this.pizzaModel.findByIdAndRemove(id);
+  async edit(id: string, editPizzaDto: EditPizzaDto): Promise<IPizza> {
+    const updatedPizza = await this.pizzaModel
+      .findByIdAndUpdate(
+        id,
+        {
+          ...editPizzaDto,
+        },
+        {
+          new: true,
+          runValidators: true,
+        },
+      )
+      .populate({ path: 'ingredients', select: '-operation' })
+      .populate({ path: 'operations' });
+
+    if (!updatedPizza) throw new NotFoundException('Pizza not found');
+
+    return updatedPizza;
   }
 
-  async edit(id: string, price: number): Promise<Pizza> {
-    return await this.pizzaModel.findByIdAndUpdate(
-      id,
-      { price },
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+  async remove(id: string): Promise<IPizza> {
+    return await this.pizzaModel.findByIdAndRemove(id);
   }
 }

@@ -30,14 +30,14 @@ export class IngredientsController {
     return this.ingredientsService.add(body);
   }
 
+  @Patch('/:id')
+  editIngredient(@Body() body: EditIngredientDto, @Param('id') id: string) {
+    return this.ingredientsService.edit(id, body);
+  }
+
   @Delete('/:id')
   @HttpCode(204)
   removeIngredient(@Param('id') id: string) {
     return this.ingredientsService.remove(id);
-  }
-
-  @Patch('/:id')
-  editIngredient(@Body() body: EditIngredientDto, @Param('id') id: string) {
-    return this.ingredientsService.edit(id, body.name);
   }
 }

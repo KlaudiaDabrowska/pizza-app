@@ -31,14 +31,14 @@ export class PizzasController {
     return this.pizzasService.add(body);
   }
 
+  @Patch('/:id')
+  editPizza(@Body() body: EditPizzaDto, @Param('id') id: string) {
+    return this.pizzasService.edit(id, body);
+  }
+
   @Delete('/:id')
   @HttpCode(204)
   removePizza(@Param('id') id: string) {
     return this.pizzasService.remove(id);
-  }
-
-  @Patch('/:id')
-  editPizza(@Body() body: EditPizzaDto, @Param('id') id: string) {
-    return this.pizzasService.edit(id, body.price);
   }
 }
