@@ -7,17 +7,20 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { OperationsService } from './operations.service';
 import { CreateOperationDto } from './dtos/create-operation.dto';
 import { EditOperationDto } from './dtos/edit-operation.dto';
+import { PageOptionsDto } from '../shared/dtos/PageMetaDtoParameters';
 
 @Controller('operations')
 export class OperationsController {
   constructor(private operationsService: OperationsService) {}
+
   @Get()
-  getOperations() {
-    return this.operationsService.getAll();
+  getOperations(@Query() pageOptions: PageOptionsDto) {
+    return this.operationsService.getAll(pageOptions);
   }
 
   @Get('/:id')

@@ -1,5 +1,5 @@
 import { Container, Grid, Typography } from "@mui/material";
-import { IIngredientWithRelated } from "../../types/IIngredient";
+import { IIngredientWithRelated } from "../../lib/types/IIngredient";
 
 export const IngredientInfo = ({
   ingredient,

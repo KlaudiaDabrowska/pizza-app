@@ -7,17 +7,19 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
 import { CreateIngredientDto } from './dtos/create-ingredient.dto';
 import { EditIngredientDto } from './dtos/edit-ingredient.dto';
+import { PageOptionsDto } from '../shared/dtos/PageMetaDtoParameters';
 
 @Controller('ingredients')
 export class IngredientsController {
   constructor(private ingredientsService: IngredientsService) {}
   @Get()
-  getIngredients() {
-    return this.ingredientsService.getAll();
+  getIngredients(@Query() pageOptions: PageOptionsDto) {
+    return this.ingredientsService.getAll(pageOptions);
   }
 
   @Get('/:id')

@@ -1,5 +1,5 @@
 import { Container, Grid, Typography } from "@mui/material";
-import { IPizzaWithRelated } from "../../types/IPizza";
+import { IPizzaWithRelated } from "../../lib/types/IPizza";
 
 export const PizzaInfo = ({ pizza }: { pizza?: IPizzaWithRelated }) => {
   return (

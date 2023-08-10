@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "http://localhost:5000", //dodać do env, nie działa ???
+  baseURL: process.env.REACT_APP_BASE_API_URL,
 });

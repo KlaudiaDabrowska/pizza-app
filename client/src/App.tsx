@@ -15,8 +15,28 @@ import { OperationsListView } from "./pages/OperationsListView";
 import { PizzaView } from "./pages/PizzaView";
 import { IngredientView } from "./pages/IngredientView";
 import { OperationView } from "./pages/OperationView";
+import { isAxiosError } from "axios";
 
-export const queryClient = new QueryClient();
+const MAX_RETRIES = 3;
+const RETRYABLE_ERRORS = [500, 502, 503, 504];
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        if (
+          isAxiosError(error) &&
+          RETRYABLE_ERRORS.includes(error.response?.status ?? 0) &&
+          failureCount <= MAX_RETRIES
+        ) {
+          return true;
+        }
+
+        return false;
+      },
+    },
+  },
+});
 
 function App() {
   const router = createBrowserRouter([

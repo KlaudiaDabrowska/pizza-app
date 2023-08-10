@@ -7,18 +7,20 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { PizzasService } from './pizzas.service';
 import { CreatePizzaDto } from './dtos/create-pizza.dto';
 import { EditPizzaDto } from './dtos/edit-pizza.dto';
+import { PageOptionsDto } from './shared/dtos/PageMetaDtoParameters';
 
 @Controller('pizzas')
 export class PizzasController {
   constructor(private pizzasService: PizzasService) {}
 
   @Get()
-  getPizzas() {
-    return this.pizzasService.getAll();
+  getPizzas(@Query() pageOptions: PageOptionsDto) {
+    return this.pizzasService.getAll(pageOptions);
   }
 
   @Get('/:id')

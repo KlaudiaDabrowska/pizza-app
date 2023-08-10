@@ -10,6 +10,8 @@ import { Ingredient } from './schema/ingredient.schema';
 import { Pizza } from '../schema/pizza.schema';
 import { Operation } from '../operations/schema/operation.schema';
 import { EditIngredientDto } from './dtos/edit-ingredient.dto';
+import { PageDto } from '../shared/dtos/PageDto';
+import { PageOptionsDto } from '../shared/dtos/PageMetaDtoParameters';
 
 export interface IIngredient {
   _id: mongoose.Types.ObjectId;
@@ -32,8 +34,30 @@ export class IngredientsService {
     private operationModel: mongoose.Model<Operation>,
   ) {}
 
-  async getAll(): Promise<IIngredient[]> {
-    return await this.ingredientModel.find().select('-operation');
+  async getAll(pageOptions: PageOptionsDto): Promise<PageDto<IIngredient>> {
+    const sortBy = pageOptions.sortBy.reduce((result, sortBy) => {
+      const key = sortBy.field;
+      result[key] = sortBy.direction;
+      return result;
+    }, {});
+
+    const data = await this.pizzaModel
+      .find()
+      .select('-operation')
+      .sort(sortBy)
+      .skip(pageOptions.skip)
+      .limit(pageOptions.itemsPerPage);
+
+    const total = await this.pizzaModel.countDocuments();
+
+    return {
+      data,
+      meta: {
+        page: pageOptions.page,
+        items: pageOptions.itemsPerPage,
+        total,
+      },
+    };
   }
 
   async getById(id: string): Promise<IIngredientRelated> {

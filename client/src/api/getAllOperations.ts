@@ -1,7 +1,15 @@
 import { apiClient } from "../config/apiConfig";
-import { IOperation } from "../types/IOperation";
+import { Direction } from "../lib/types/Direction";
+import { IOperation } from "../lib/types/IOperation";
+import { IPageableResponse } from "../lib/types/Response";
 
-export const getAllOperations = async () => {
-  const response = await apiClient.get<IOperation[]>(`/operations`);
+export const getAllOperations = async (
+  page: number,
+  sortField: string,
+  sortDirection: Direction
+) => {
+  const response = await apiClient.get<IPageableResponse<IOperation>>(
+    `/operations?itemsPerPage=10&page=${page}&sortBy=${sortField}:${sortDirection}`
+  );
   return response.data;
 };

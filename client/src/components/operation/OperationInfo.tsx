@@ -1,5 +1,5 @@
 import { Container, Grid, Typography } from "@mui/material";
-import { IOperationWithRelated } from "../../types/IOperation";
+import { IOperationWithRelated } from "../../lib/types/IOperation";
 
 export const OperationInfo = ({
   operation,

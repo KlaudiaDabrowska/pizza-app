@@ -1,10 +1,10 @@
 import { MainTemplate } from "../templates/MainTemplate";
-import { List } from "../components/common/List";
+import { PizzasList } from "../components/pizza/PizzasList";
 
 export const PizzasListView = () => {
   return (
     <MainTemplate>
-      <List itemName="pizza" />
+      <PizzasList />
     </MainTemplate>
   );
 };

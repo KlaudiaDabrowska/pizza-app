@@ -1,10 +1,10 @@
 import { MainTemplate } from "../templates/MainTemplate";
-import { List } from "../components/common/List";
+import { OperationsList } from "../components/operation/OperationsList";
 
 export const OperationsListView = () => {
   return (
     <MainTemplate>
-      <List itemName="operation" />
+      <OperationsList />
     </MainTemplate>
   );
 };
