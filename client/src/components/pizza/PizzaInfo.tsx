@@ -6,10 +6,12 @@ export const PizzaInfo = ({ pizza }: { pizza?: IPizzaWithRelated }) => {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h5">{pizza?.name}</Typography>
+          <Typography variant="h5" data-testid="pizzaName">
+            {pizza?.name}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" data-testid="pizzaIngredients">
             Ingredients:{" "}
             {pizza?.ingredients.length !== 0
               ? pizza?.ingredients
@@ -19,7 +21,7 @@ export const PizzaInfo = ({ pizza }: { pizza?: IPizzaWithRelated }) => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" data-testid="pizzaOperations">
             Operations:{" "}
             {pizza?.operations.length !== 0
               ? pizza?.operations.map((operation) => operation?.name).join(", ")

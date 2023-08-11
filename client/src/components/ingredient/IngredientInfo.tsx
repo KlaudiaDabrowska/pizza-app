@@ -10,10 +10,12 @@ export const IngredientInfo = ({
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h5">{ingredient?.name}</Typography>
+          <Typography variant="h5" data-testid="ingredientName">
+            {ingredient?.name}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" data-testid="ingredientOperation">
             Operation:{" "}
             {ingredient?.operation
               ? ingredient.operation?.name
@@ -21,7 +23,7 @@ export const IngredientInfo = ({
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" data-testid="ingredientPizzas">
             Pizzas:{" "}
             {ingredient?.pizzas.length !== 0
               ? ingredient?.pizzas.map((pizza) => pizza?.name).join(", ")
