@@ -4,14 +4,15 @@ import { IPageableResponse } from "../../lib/types/Response";
 import { IPizza } from "../../lib/types/IPizza";
 import { IIngredient } from "../../lib/types/IIngredient";
 import { IOperation } from "../../lib/types/IOperation";
+import { SetURLSearchParams } from "react-router-dom";
 
 interface DefaultPaginationProps {
   item: IPageableResponse<IPizza | IIngredient | IOperation>;
   field: string;
   direction: Direction;
   page: number;
-  setPage: any;
-  setSearchParams: any;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setSearchParams: SetURLSearchParams;
 }
 
 export const DefaultPagination = ({

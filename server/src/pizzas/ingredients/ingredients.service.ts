@@ -41,14 +41,14 @@ export class IngredientsService {
       return result;
     }, {});
 
-    const data = await this.pizzaModel
+    const data = await this.ingredientModel
       .find()
       .select('-operation')
       .sort(sortBy)
       .skip(pageOptions.skip)
       .limit(pageOptions.itemsPerPage);
 
-    const total = await this.pizzaModel.countDocuments();
+    const total = await this.ingredientModel.countDocuments();
 
     return {
       data,
