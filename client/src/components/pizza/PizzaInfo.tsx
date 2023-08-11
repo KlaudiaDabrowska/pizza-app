@@ -11,15 +11,19 @@ export const PizzaInfo = ({ pizza }: { pizza?: IPizzaWithRelated }) => {
         <Grid item xs={12}>
           <Typography variant="subtitle2">
             Ingredients:{" "}
-            {pizza?.ingredients
-              .map((ingredient) => ingredient?.name)
-              .join(", ")}
+            {pizza?.ingredients.length !== 0
+              ? pizza?.ingredients
+                  .map((ingredient) => ingredient?.name)
+                  .join(", ")
+              : " No ingredients"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle2">
             Operations:{" "}
-            {pizza?.operations.map((operation) => operation?.name).join(", ")}
+            {pizza?.operations.length !== 0
+              ? pizza?.operations.map((operation) => operation?.name).join(", ")
+              : " No operations"}
           </Typography>
         </Grid>
       </Grid>

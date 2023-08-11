@@ -14,12 +14,18 @@ export const IngredientInfo = ({
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle2">
-            Operation: {ingredient?.operation?.name}
+            Operation:{" "}
+            {ingredient?.operation
+              ? ingredient.operation?.name
+              : "No operation"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle2">
-            Pizzas: {ingredient?.pizzas.map((pizza) => pizza?.name).join(", ")}
+            Pizzas:{" "}
+            {ingredient?.pizzas.length !== 0
+              ? ingredient?.pizzas.map((pizza) => pizza?.name).join(", ")
+              : " No pizzas"}
           </Typography>
         </Grid>
       </Grid>

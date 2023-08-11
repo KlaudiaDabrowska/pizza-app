@@ -15,14 +15,19 @@ export const OperationInfo = ({
         <Grid item xs={12}>
           <Typography variant="subtitle2">
             Ingredients:{" "}
-            {operation?.ingredients
-              .map((ingredient) => ingredient?.name)
-              .join(", ")}
+            {operation?.ingredients.length !== 0
+              ? operation?.ingredients
+                  .map((ingredient) => ingredient?.name)
+                  .join(", ")
+              : " No ingredients"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle2">
-            Pizzas: {operation?.pizzas.map((pizza) => pizza?.name).join(", ")}
+            Pizzas:{" "}
+            {operation?.pizzas.length !== 0
+              ? operation?.pizzas.map((pizza) => pizza?.name).join(", ")
+              : " No pizzas"}
           </Typography>
         </Grid>
       </Grid>
