@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { Operation } from 'src/pizzas/operations/schema/operation.schema';
+import { Operation } from '../../operations/schema/operation.schema';
 
 @Schema()
 export class Ingredient {
