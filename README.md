@@ -1,6 +1,6 @@
 # Pizza Application
 
-The Pizza App is simple and allows users to explore pizzas, ingredients and operations on the front-end. The backend supports all CRUD operations on collections. This README provides information on how to run the application using docker-compose, as well as details on its functionality and configuration.
+The Pizza App is simple and allows users to explore pizzas, ingredients and operations on the front-end. The backend supports all CRUD operations on collections. This README provides information on how to run the application using docker-compose, as well as details on its functionality and configuration. The client application is only available to display data. Creating and editing resources can be done directly via HTTP request. Postman collection with all possible requests can be found in the root directory.
 
 ---
 

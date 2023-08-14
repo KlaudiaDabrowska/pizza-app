@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "fe73094a-d4ea-496c-860c-6228973c48ed",
+		"name": "Pizza-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Operation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test-operation\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Ingredient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"test-ingredient\",\n\"operation\": \"operationId\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/ingredients/{ingredientId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients",
+						"{ingredientId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pizza",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test-pizza\",\n    \"price\": 20,\n    \"operations\": [\n        \"operationId\"\n    ],\n    \"ingredients\": [\n        \"ingredientId\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/pizzas?itemsPerPage=2&page=1&sortBy=name:asc",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pizzas"
+					],
+					"query": [
+						{
+							"key": "itemsPerPage",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sortBy",
+							"value": "name:asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of pizzas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/pizzas?itemsPerPage=10&page=1&sortBy=name:asc",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pizzas"
+					],
+					"query": [
+						{
+							"key": "itemsPerPage",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sortBy",
+							"value": "name:asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of ingredients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/ingredients?itemsPerPage=10&page=1&sortBy=name:asc",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients"
+					],
+					"query": [
+						{
+							"key": "itemsPerPage",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sortBy",
+							"value": "name:asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of operations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/operations?itemsPerPage=10&page=1&sortBy=name:asc",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"operations"
+					],
+					"query": [
+						{
+							"key": "itemsPerPage",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sortBy",
+							"value": "name:asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pizza by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/pizzas/{pizzaId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pizzas",
+						"{pizzaId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ingredient by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/ingredients/{ingredientId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients",
+						"{ingredientId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get operation by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/operations/{operationId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"operations",
+						"{operationId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete pizza",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/pizzas/{pizzaId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pizzas",
+						"{pizzaId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ingredient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/ingredients/{ingredientId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients",
+						"{ingredientId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete operation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/operations/{operationId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"operations",
+						"{operationId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit pizza",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/pizzas/{pizzaId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pizzas",
+						"{pizzaId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit ingredient",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"new-test-ingredient\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/ingredients/{ingredientId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ingredients",
+						"{ingredientId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit operation",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"new-test-operation\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/operations/{operationId}",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"operations",
+						"{operationId}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
