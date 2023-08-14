@@ -19,7 +19,7 @@ export const IngredientsListItem = ({
           }}
         >
           <Link
-            to={`/ingredient/${ingredient._id}`}
+            to={`/ingredients/${ingredient._id}`}
             style={{ textDecoration: "none" }}
           >
             <Typography variant="h5">{ingredient.name}</Typography>

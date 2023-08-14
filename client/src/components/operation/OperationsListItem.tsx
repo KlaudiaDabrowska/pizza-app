@@ -19,7 +19,7 @@ export const OperationsListItem = ({
           }}
         >
           <Link
-            to={`/operation/${operation._id}`}
+            to={`/operations/${operation._id}`}
             style={{ textDecoration: "none" }}
           >
             <Typography variant="h5">{operation.name}</Typography>

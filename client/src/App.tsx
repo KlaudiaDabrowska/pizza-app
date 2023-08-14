@@ -50,7 +50,7 @@ function App() {
       errorElement: <ErrorBoundary />,
     },
     {
-      path: "/pizza/:pizzaId",
+      path: "/pizzas/:pizzaId",
       element: <PizzaView />,
       errorElement: <ErrorBoundary />,
     },
@@ -60,7 +60,7 @@ function App() {
       errorElement: <ErrorBoundary />,
     },
     {
-      path: "/ingredient/:ingredientId",
+      path: "/ingredients/:ingredientId",
       element: <IngredientView />,
       errorElement: <ErrorBoundary />,
     },
@@ -70,7 +70,7 @@ function App() {
       errorElement: <ErrorBoundary />,
     },
     {
-      path: "/operation/:operationId",
+      path: "/operations/:operationId",
       element: <OperationView />,
       errorElement: <ErrorBoundary />,
     },

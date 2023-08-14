@@ -14,7 +14,7 @@ export const PizzasListItem = ({ pizza }: { pizza: IPizza }) => {
             display: "flex",
           }}
         >
-          <Link to={`/pizza/${pizza._id}`} style={{ textDecoration: "none" }}>
+          <Link to={`/pizzas/${pizza._id}`} style={{ textDecoration: "none" }}>
             <Typography variant="h5">{pizza.name}</Typography>
             <Typography variant="h6" sx={{ textAlign: "center" }}>
               Price: {pizza.price}

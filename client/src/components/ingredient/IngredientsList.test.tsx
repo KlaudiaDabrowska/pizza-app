@@ -3,7 +3,6 @@ import { setupServer } from "msw/lib/node";
 import { rest } from "msw";
 import { MemoryRouter } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { generateMockOperationsResponse } from "../../lib/mocks/generateMockOperationsResponse";
 import { IngredientsList } from "./IngredientsList";
 import { generateMockIngredientsResponse } from "../../lib/mocks/generateMockIngredientsResponse";
 

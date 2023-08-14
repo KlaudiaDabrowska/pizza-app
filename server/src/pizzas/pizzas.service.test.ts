@@ -6,11 +6,18 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PizzaSchema } from './schema/pizza.schema';
 import { IngredientSchema } from './ingredients/schema/ingredient.schema';
 import { OperationSchema } from './operations/schema/operation.schema';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { SortBy } from './shared/dtos/PageMetaDtoParameters';
 
 describe('PizzasService', () => {
   let pizzaService: PizzasService;
+
+  const pizza = {
+    name: 'Pizza 1',
+    price: 10,
+    ingredients: [],
+    operations: [],
+  };
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -30,13 +37,6 @@ describe('PizzasService', () => {
   });
 
   it('should create a pizza', async () => {
-    const pizza = {
-      name: 'Pizza 1',
-      price: 10,
-      ingredients: [],
-      operations: [],
-    };
-
     const result = await pizzaService.add(pizza);
 
     expect(result._id).toBeDefined();
@@ -44,14 +44,6 @@ describe('PizzasService', () => {
   });
 
   it('should throw BadRequestException when pizza already exists', async () => {
-    const pizza = {
-      _id: new mongoose.Types.ObjectId(),
-      name: 'Pizza 1',
-      price: 10,
-      ingredients: [],
-      operations: [],
-    };
-
     await pizzaService.add(pizza);
     const secondPizza = pizzaService.add(pizza);
 
@@ -61,13 +53,6 @@ describe('PizzasService', () => {
   });
 
   it('should return pizza by id', async () => {
-    const pizza = {
-      name: 'Pizza 1',
-      price: 10,
-      ingredients: [],
-      operations: [],
-    };
-
     const addedPizza = await pizzaService.add(pizza);
 
     const result = await pizzaService.getById(addedPizza._id.toString());
@@ -75,14 +60,17 @@ describe('PizzasService', () => {
     expect(result).toMatchObject(pizza);
   });
 
-  it('should return list of pizzas', async () => {
-    const pizza1 = {
-      name: 'Pizza 1',
-      price: 10,
-      ingredients: [],
-      operations: [],
-    };
+  it('should throw an error when want to found a non-existent pizza', () => {
+    const result = pizzaService.getById(
+      new mongoose.Types.ObjectId().toString(),
+    );
 
+    expect(result).rejects.toThrowError(
+      new NotFoundException('Pizza not found'),
+    );
+  });
+
+  it('should return list of pizzas', async () => {
     const pizza2 = {
       name: 'Pizza 2',
       price: 20,
@@ -90,7 +78,7 @@ describe('PizzasService', () => {
       operations: [],
     };
 
-    const addedPizza1 = await pizzaService.add(pizza1);
+    const addedPizza1 = await pizzaService.add(pizza);
     const addedPizza2 = await pizzaService.add(pizza2);
 
     const pizzasList = {
@@ -123,5 +111,47 @@ describe('PizzasService', () => {
     });
 
     expect(result).toMatchObject(pizzasList);
+  });
+
+  it('should edit a pizza', async () => {
+    const addedPizza = await pizzaService.add(pizza);
+
+    const editedPizza = await pizzaService.edit(addedPizza._id.toString(), {
+      name: 'Pizza 2',
+    });
+
+    pizza.name = editedPizza.name;
+
+    expect(editedPizza).toMatchObject(pizza);
+  });
+
+  it('should throw an error when want to edit a non-existent pizza', () => {
+    const editedPizza = pizzaService.edit(
+      new mongoose.Types.ObjectId().toString(),
+      {
+        name: 'Pizza 2',
+      },
+    );
+
+    expect(editedPizza).rejects.toThrowError(
+      new NotFoundException('Pizza not found'),
+    );
+  });
+
+  it('should remove a pizza', async () => {
+    const addedPizza = await pizzaService.add(pizza);
+
+    await pizzaService.remove(addedPizza._id.toString());
+
+    const pizzasList = await pizzaService.getAll({
+      page: 1,
+      itemsPerPage: 2,
+      sortBy: [new SortBy('name', 'asc')],
+      skip: 0,
+    });
+
+    const result = { data: [], meta: { items: 2, page: 1, total: 0 } };
+
+    expect(pizzasList).toMatchObject(result);
   });
 });

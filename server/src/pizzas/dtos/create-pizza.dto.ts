@@ -7,7 +7,7 @@ import {
   Length,
   Min,
 } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 
 export class CreatePizzaDto {
   @IsString()
@@ -24,8 +24,8 @@ export class CreatePizzaDto {
   price: number;
 
   @IsArray()
-  ingredients: ObjectId[];
+  ingredients: mongoose.Types.ObjectId[];
 
   @IsArray()
-  operations: ObjectId[];
+  operations: mongoose.Types.ObjectId[];
 }

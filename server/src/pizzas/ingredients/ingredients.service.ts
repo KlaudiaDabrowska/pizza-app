@@ -23,6 +23,10 @@ export interface IIngredientRelated extends IIngredient {
   pizzas: Pizza[];
 }
 
+export interface IIngredientWithOperation extends IIngredient {
+  operation: Operation;
+}
+
 @Injectable()
 export class IngredientsService {
   constructor(
@@ -80,7 +84,9 @@ export class IngredientsService {
     };
   }
 
-  async add(createIngredientDto: CreateIngredientDto): Promise<IIngredient> {
+  async add(
+    createIngredientDto: CreateIngredientDto,
+  ): Promise<IIngredientWithOperation> {
     try {
       const operation = await this.operationModel.findById(
         createIngredientDto.operation,

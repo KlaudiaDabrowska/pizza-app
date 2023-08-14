@@ -1,6 +1,37 @@
 version: "3.1"
 
 services:
+  pizza-app-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - pizza-app-database
+    environment:
+      - MONGO_DB_URL=mongodb://pizza-app-database:27017
+      - MONGO_DB_NAME=pizza-app
+      - MONGO_DB_PASSWORD=secret-password
+      - MONGO_DB_USERNAME=pizza-app
+    networks:
+      pizza-app:
+        aliases:
+          - pizza-app-server
+
+  pizza-app-client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BASE_API_URL=http://localhost:5000
+    networks:
+      pizza-app:
+        aliases:
+          - pizza-app-client
+
   pizza-app-database:
     image: mongo
     restart: always
@@ -10,6 +41,10 @@ services:
       MONGO_INITDB_DATABASE: pizza-app
       MONGO_INITDB_ROOT_USERNAME: pizza-app
       MONGO_INITDB_ROOT_PASSWORD: secret-password
+    networks:
+      pizza-app:
+        aliases:
+          - pizza-app-database
 
   mongo-express:
     image: mongo-express
@@ -22,3 +57,14 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: pizza-app
       ME_CONFIG_MONGODB_ADMINPASSWORD: secret-password
       ME_CONFIG_MONGODB_URL: mongodb://pizza-app:secret-password@pizza-app-database:27017/
+    networks:
+      pizza-app:
+        aliases:
+          - pizza-app-mongo-express
+
+networks:
+  pizza-app:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.8.0.0/16

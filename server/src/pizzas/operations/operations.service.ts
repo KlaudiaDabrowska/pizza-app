@@ -95,7 +95,7 @@ export class OperationsService {
     id: string,
     editOperationDto: EditOperationDto,
   ): Promise<IOperation> {
-    return await this.operationModel.findByIdAndUpdate(
+    const updatedOperation = await this.operationModel.findByIdAndUpdate(
       id,
       { ...editOperationDto },
       {
@@ -103,6 +103,10 @@ export class OperationsService {
         runValidators: true,
       },
     );
+
+    if (!updatedOperation) throw new NotFoundException('Operation not found');
+
+    return updatedOperation;
   }
 
   async remove(id: string): Promise<IOperation> {

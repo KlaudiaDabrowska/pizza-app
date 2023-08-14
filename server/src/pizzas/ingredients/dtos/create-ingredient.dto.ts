@@ -1,5 +1,5 @@
 import { IsMongoId, IsNotEmpty, IsString, Length } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 
 export class CreateIngredientDto {
   @IsString()
@@ -11,5 +11,5 @@ export class CreateIngredientDto {
   name: string;
 
   @IsMongoId()
-  operation: ObjectId;
+  operation: mongoose.Types.ObjectId;
 }
